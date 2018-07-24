@@ -12,7 +12,9 @@ public class PlayerControllerScript : MonoBehaviour
     float speed;
 
     bool isShooting;
-
+    bool isFalling;
+    bool isTouchingGround;
+    bool isJumping;
 
     private void Awake()
     {
@@ -52,6 +54,13 @@ public class PlayerControllerScript : MonoBehaviour
         {
             isShooting = false;
         }
+
+        if (Input.GetAxis("Vertical")>0 && isTouchingGround)
+        {
+            isTouchingGround = false;
+            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, 5);
+            isJumping = true;
+        }
     }
 
     private void SetAnimator()
@@ -67,5 +76,28 @@ public class PlayerControllerScript : MonoBehaviour
 
         myAnimator.SetBool("Shooting", isShooting);
 
+
+        if (Mathf.Round(myRigidbody.velocity.y) < 0)
+        {
+            isFalling = true;
+            isJumping = false;
+
+        }
+        else
+        {
+            isFalling = false;
+        }
+        myAnimator.SetBool("Falling", isFalling);
+
+        myAnimator.SetBool("Jumping", isJumping);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isTouchingGround = true;
+            isJumping = false;
+        }
     }
 }
