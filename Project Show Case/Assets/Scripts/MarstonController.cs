@@ -21,12 +21,16 @@ public class MarstonController : MonoBehaviour
 
     bool isShooting;
     bool isFalling;
-    bool isTouchingGround;
     bool isJumping;
     bool isAttacking;
 
     bool isDead;
+    bool isTouchingGround;
 
+    [SerializeField]
+    bool testingBool;
+
+    int health;
     private void Awake()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
@@ -37,12 +41,16 @@ public class MarstonController : MonoBehaviour
         //spawnPosition.transform.position = new Vector2(0.75f, 0);
 
         isDead = false;
+
+        health = 5;
     }
 
     private void Update()
     {
-        PlayerInput();
         SetAnimator();
+        if (!testingBool)
+            return;
+        PlayerInput();
     }
 
 
@@ -81,7 +89,7 @@ public class MarstonController : MonoBehaviour
         if (Input.GetAxis("Player " + playerNumber + " Vertical") > 0 && isTouchingGround)
         {
             isTouchingGround = false;
-            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, 5);
+            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, 12);
             isJumping = true;
         }
 
@@ -146,6 +154,23 @@ public class MarstonController : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("There was some collision");
+
+        Debug.Log(collision.gameObject.tag);
+        if (collision.gameObject.CompareTag("Attack Collider"))
+        {
+            Debug.Log("Collision with attack collider");
+
+            if (collision.gameObject.transform.parent != gameObject)
+            {
+                Debug.Log("Health reduced");
+                health--;
+            }
+        }
+    }
+
     private void TakeDamage()
     {
         myAnimator.SetTrigger("Damage Taken");
@@ -174,7 +199,7 @@ public class MarstonController : MonoBehaviour
 
     public void ShootBullet()
     {
-        Debug.Log("Function Called");
+        //Debug.Log("Function Called");
         Instantiate(bullet, spawnPosition.transform.position, Quaternion.Euler(0, 0, mySpriteRenderer.flipX ? 180 : 0));
     }
 }
