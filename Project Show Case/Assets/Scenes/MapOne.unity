@@ -463,57 +463,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &254710980
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4239090445357006, guid: 0392d26fab36ed044a10b020a359d233, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 2.96
-      objectReference: {fileID: 0}
-    - target: {fileID: 4239090445357006, guid: 0392d26fab36ed044a10b020a359d233, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 6.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 4239090445357006, guid: 0392d26fab36ed044a10b020a359d233, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4239090445357006, guid: 0392d26fab36ed044a10b020a359d233, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4239090445357006, guid: 0392d26fab36ed044a10b020a359d233, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4239090445357006, guid: 0392d26fab36ed044a10b020a359d233, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4239090445357006, guid: 0392d26fab36ed044a10b020a359d233, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4239090445357006, guid: 0392d26fab36ed044a10b020a359d233, type: 2}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1672320553976570, guid: 0392d26fab36ed044a10b020a359d233, type: 2}
-      propertyPath: m_Name
-      value: Marston (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 114713234459751654, guid: 0392d26fab36ed044a10b020a359d233,
-        type: 2}
-      propertyPath: testingBool
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 0392d26fab36ed044a10b020a359d233, type: 2}
-  m_IsPrefabAsset: 0
 --- !u!1 &281507768
 GameObject:
   m_ObjectHideFlags: 0
