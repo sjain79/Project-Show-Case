@@ -104,7 +104,7 @@ public class TempNamkaController : MonoBehaviour
             myAnimator.SetBool("Running", false);
         }
 
-        //myAnimator.SetBool("Shooting", isShooting);
+        myAnimator.SetBool("Shooting", isShooting);
 
 
         if (Mathf.Round(myRigidbody.velocity.y) < 0)
