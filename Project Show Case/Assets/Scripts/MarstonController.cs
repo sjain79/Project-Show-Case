@@ -128,7 +128,7 @@ public class MarstonController : MonoBehaviour
 
         myAnimator.SetBool("Jumping", isJumping);
 
-        myAnimator.SetBool("Dead", isDead);
+        //myAnimator.SetBool("Dead", isDead);
 
         //myAnimator.SetBool("Attack 3", isAttacking3);
 
