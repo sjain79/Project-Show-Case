@@ -99,12 +99,12 @@ public class MarstonController : MonoBehaviour
         }
 
 
-        if (Input.GetAxis("Player " + playerNumber + " Vertical") > 0 && isTouchingGround)
-        {
-            isTouchingGround = false;
-            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, 12);
-            isJumping = true;
-        }
+        //if (Input.GetAxis("Player " + playerNumber + " Vertical") > 0 && isTouchingGround)
+        //{
+        //    isTouchingGround = false;
+        //    myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, 12);
+        //    isJumping = true;
+        //}
 
         if (Input.GetButtonDown("Player "+playerNumber+" Jump") && isTouchingGround)
         {
