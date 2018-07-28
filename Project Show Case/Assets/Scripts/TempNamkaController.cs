@@ -18,11 +18,12 @@ public class TempNamkaController : MonoBehaviour
     [SerializeField]
     string playerNumber;
 
-    bool isShooting;
+    bool isSlashing;
     bool isFalling;
     bool isTouchingGround;
     bool isJumping;
     bool isAttacking1, isAttacking2, isAttacking3;
+    bool lockMovement;
 
     bool isDead;
 
@@ -43,39 +44,52 @@ public class TempNamkaController : MonoBehaviour
 
     private void PlayerInput()
     {
-        if (isDead)
-        {
-            return;
-        }
+        //Do nothing if player is dead
+        //if (isDead)
+        //{
+        //    return;
+        //}
 
+        //Flip the character's sprite based on the player's horizontal axis input and add velocity to it
         if (Input.GetAxis("Player " + playerNumber + " Horizontal") != 0)
         {
-            if (Input.GetAxis("Player " + playerNumber + " Horizontal") > 0)
+            if (!lockMovement)
             {
-                mySpriteRenderer.flipX = false;
-            }
-            else if (Input.GetAxis("Player " + playerNumber + " Horizontal") < 0)
-            {
-                mySpriteRenderer.flipX = true;
+                if (Input.GetAxis("Player " + playerNumber + " Horizontal") > 0)
+                {
+                    mySpriteRenderer.flipX = false;
+                }
+                else if (Input.GetAxis("Player " + playerNumber + " Horizontal") < 0)
+                {
+                    mySpriteRenderer.flipX = true;
+                }
+
+                myRigidbody.velocity = new Vector2(speed * Input.GetAxis("Player " + playerNumber + " Horizontal"), myRigidbody.velocity.y);
             }
 
-            myRigidbody.velocity = new Vector2(speed * Input.GetAxis("Player " + playerNumber + " Horizontal"), myRigidbody.velocity.y);
+            else
+            {
+                myRigidbody.velocity = new Vector2(0, myRigidbody.velocity.y);
+            }
         }
 
-        if (Input.GetButton("Player " + playerNumber + " Fire 1"))
+        if (Input.GetButton("Player " + playerNumber + " Fire 1") && !isJumping && !isFalling)
         {
-            isShooting = true;
+            isSlashing = true;
         }
-        else
-        {
-            isShooting = false;
-        }
+        //else
+        //{
+        //    isSlashing = false;
+        //}
 
         if (Input.GetAxis("Player " + playerNumber + " Vertical") > 0 && isTouchingGround)
         {
-            isTouchingGround = false;
-            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpingSpeed);
-            isJumping = true;
+            if (!lockMovement)
+            {
+                isTouchingGround = false;
+                myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpingSpeed);
+                isJumping = true;
+            }
         }
 
         if (Input.GetButtonDown("Player " + playerNumber + " Fire 4"))
@@ -91,6 +105,18 @@ public class TempNamkaController : MonoBehaviour
             isAttacking1 = true;
         }
 
+        //TEMPORAL
+        if(Input.GetKeyDown(KeyCode.H))
+        {
+            TakeDamage();
+        }
+
+        //TEMPORAL
+        if(Input.GetKeyDown(KeyCode.K))
+        {
+            Die();
+        }
+
     }
 
     private void SetAnimator()
@@ -104,7 +130,7 @@ public class TempNamkaController : MonoBehaviour
             myAnimator.SetBool("Running", false);
         }
 
-        myAnimator.SetBool("Shooting", isShooting);
+        myAnimator.SetBool("Slashing", isSlashing);
 
 
         if (Mathf.Round(myRigidbody.velocity.y) < 0)
@@ -122,12 +148,6 @@ public class TempNamkaController : MonoBehaviour
         myAnimator.SetBool("Jumping", isJumping);
 
         myAnimator.SetBool("Dead", isDead);
-
-        //myAnimator.SetBool("Attack 3", isAttacking3);
-
-        //myAnimator.SetBool("Attack 2", isAttacking2);
-
-        //myAnimator.SetBool("Attack 1", isAttacking1);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -141,25 +161,30 @@ public class TempNamkaController : MonoBehaviour
 
     private void TakeDamage()
     {
-        myAnimator.SetTrigger("Damage Taken");
+        myAnimator.SetTrigger("Hurt");
     }
 
-    public void CompleteAttack(int attackBoolean)
+    private void Die()
     {
-        switch (attackBoolean)
-        {
-            case 1:
-                isAttacking1 = false;
-                break;
-            case 2:
-                isAttacking2 = false;
-                break;
-            case 3:
-                isAttacking3 = false;
-                break;
-            default:
-                Debug.LogError("Switch out of bound!");
-                break;
-        }
+        if (!isDead)
+            lockMovement = true;
+        else
+            lockMovement = false;
+        isDead = !isDead;
+    }
+
+    public void FinishSlashing()
+    {
+        isSlashing = false;
+    }
+
+    public void LockMovement()
+    {
+        lockMovement = true;
+    }
+
+    public void UnlockMovement()
+    {
+        lockMovement = false;
     }
 }
