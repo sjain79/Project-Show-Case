@@ -74,10 +74,22 @@ public class MarstonController : MonoBehaviour
                 spawnPosition.transform.localPosition = new Vector2(-(Mathf.Abs(spawnPosition.transform.localPosition.x)), (spawnPosition.transform.localPosition.y));
             }
 
-            myRigidbody.velocity = new Vector2(speed * Input.GetAxis("Player " + playerNumber + " Horizontal"), myRigidbody.velocity.y);
+            myRigidbody.velocity = new Vector2(speed * Input.GetAxis("Player " + playerNumber + " Horizontal") * 10, myRigidbody.velocity.y);
         }
 
-        if (Input.GetButton("Player " + playerNumber + " Fire 1"))
+        //if (Input.GetButton("Player " + playerNumber + " Fire 1"))
+        //{
+        //    isShooting = true;
+        //}
+        //else
+        //{
+        //    isShooting = false;
+        //}
+
+        Debug.Log(Input.GetAxis("Player " + playerNumber + " Fire 1"));
+        //TODO: Fix issue
+        //https://www.youtube.com/watch?v=56VtmxfiKfs
+        if (Input.GetAxis("Player " + playerNumber + " Fire 1") < 0)
         {
             isShooting = true;
         }
@@ -86,7 +98,15 @@ public class MarstonController : MonoBehaviour
             isShooting = false;
         }
 
+
         if (Input.GetAxis("Player " + playerNumber + " Vertical") > 0 && isTouchingGround)
+        {
+            isTouchingGround = false;
+            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, 12);
+            isJumping = true;
+        }
+
+        if (Input.GetButtonDown("Player "+playerNumber+" Jump") && isTouchingGround)
         {
             isTouchingGround = false;
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, 12);
@@ -110,7 +130,7 @@ public class MarstonController : MonoBehaviour
 
     private void SetAnimator()
     {
-        if (Mathf.Abs(myRigidbody.velocity.x) > 0 && Input.GetAxis("Player " + playerNumber + " Horizontal") != 0)
+        if (Mathf.Round(Mathf.Abs(myRigidbody.velocity.x)) > 0 && Input.GetAxis("Player " + playerNumber + " Horizontal") != 0)
         {
             myAnimator.SetBool("Running", true);
         }
