@@ -10,7 +10,7 @@ public class ControllerInput : MonoBehaviour
     private void Update()
     {
         Debug.Log(Input.GetJoystickNames());
-        if (Input.GetButtonDown())
+        if (Input.GetButtonDown("Player 1 Start"))
         {
             Debug.Log("Controllrt Start Button Pressed");
         }
