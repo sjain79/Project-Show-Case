@@ -92,18 +92,18 @@ public class TempNamkaController : MonoBehaviour
             }
         }
 
-        if (Input.GetButtonDown("Player " + playerNumber + " Fire 4"))
-        {
-            isAttacking3 = true;
-        }
-        else if (Input.GetButtonDown("Player " + playerNumber + " Fire 3"))
-        {
-            isAttacking2 = true;
-        }
-        else if (Input.GetButtonDown("Player " + playerNumber + " Fire 2"))
-        {
-            isAttacking1 = true;
-        }
+        //if (Input.GetButtonDown("Player " + playerNumber + " Fire 4"))
+        //{
+        //    isAttacking3 = true;
+        //}
+        //else if (Input.GetButtonDown("Player " + playerNumber + " Fire 3"))
+        //{
+        //    isAttacking2 = true;
+        //}
+        //else if (Input.GetButtonDown("Player " + playerNumber + " Fire 2"))
+        //{
+        //    isAttacking1 = true;
+        //}
 
         //TEMPORAL
         if(Input.GetKeyDown(KeyCode.H))
