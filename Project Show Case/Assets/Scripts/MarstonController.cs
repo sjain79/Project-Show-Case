@@ -19,6 +19,8 @@ public class MarstonController : MonoBehaviour
     [SerializeField]
     GameObject bullet;
 
+    GameObject muzzleFlash;
+
     bool isShooting;
     bool isFalling;
     bool isJumping;
@@ -38,11 +40,12 @@ public class MarstonController : MonoBehaviour
         mySpriteRenderer = GetComponent<SpriteRenderer>();
 
         spawnPosition = transform.GetChild(0).gameObject;
-        //spawnPosition.transform.position = new Vector2(0.75f, 0);
 
         isDead = false;
 
         health = 5;
+
+        //muzzleFlash = transform.GetChild(3).gameObject;
     }
 
     private void Update()
@@ -51,6 +54,11 @@ public class MarstonController : MonoBehaviour
         if (!testingBool)
             return;
         PlayerInput();
+
+        if (health<=0 && !isDead)
+        {
+            isDead = true;
+        }
     }
 
 
@@ -156,7 +164,7 @@ public class MarstonController : MonoBehaviour
 
         myAnimator.SetBool("Jumping", isJumping);
 
-        //myAnimator.SetBool("Dead", isDead);
+        myAnimator.SetBool("Dead", isDead);
 
         //myAnimator.SetBool("Attack 3", isAttacking3);
 
@@ -172,6 +180,8 @@ public class MarstonController : MonoBehaviour
             isTouchingGround = true;
             isJumping = false;
         }
+
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -186,8 +196,15 @@ public class MarstonController : MonoBehaviour
             if (collision.gameObject.transform.parent != gameObject)
             {
                 Debug.Log("Health reduced");
+                TakeDamage();
                 health--;
             }
+        }
+
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            health--;
+            TakeDamage();
         }
     }
 

@@ -14,6 +14,12 @@ public class BulletScript : MonoBehaviour
 
     private void OnBecameVisible()
     {
+        Debug.Log("Called Destroy on bullet");
         //Destroy(gameObject);   
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Destroy(gameObject);
     }
 }
