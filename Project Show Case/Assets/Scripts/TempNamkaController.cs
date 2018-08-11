@@ -82,7 +82,7 @@ public class TempNamkaController : MonoBehaviour
         //    isSlashing = false;
         //}
 
-        if (Input.GetAxis("Player " + playerNumber + " Vertical") > 0 && isTouchingGround)
+        if (Input.GetButton("Player " + playerNumber + " Jump") && isTouchingGround)
         {
             if (!lockMovement)
             {
