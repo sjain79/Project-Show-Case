@@ -16,13 +16,15 @@ public class NamkaController : CharacterScript
     protected override void Update()
     {
         base.Update();
+        PlayerInput();
         SetAnimator();
     }
 
 
     private void PlayerInput()
     {
-
+        if (isDead)
+            return;
 
         if (Input.GetButton("Player " + playerNumber + " Fire 1") && !isJumping && !isFalling)
         {
@@ -44,53 +46,18 @@ public class NamkaController : CharacterScript
     }
 
     private void SetAnimator()
-    {
-        if (Mathf.Abs(myRigidbody.velocity.x) > 0 && Input.GetAxis("Player " + playerNumber + " Horizontal") != 0)
-        {
-            myAnimator.SetBool("Running", true);
-        }
-        else
-        {
-            myAnimator.SetBool("Running", false);
-        }
-
+    { 
         myAnimator.SetBool("Slashing", isSlashing);
-
-
-        if (Mathf.Round(myRigidbody.velocity.y) < 0)
-        {
-            isFalling = true;
-            isJumping = false;
-
-        }
-        else
-        {
-            isFalling = false;
-        }
-        myAnimator.SetBool("Falling", isFalling);
-
-        myAnimator.SetBool("Jumping", isJumping);
-
-        myAnimator.SetBool("Dead", isDead);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isTouchingGround = true;
-            isJumping = false;
-        }
-    }
-
-    private void Die()
-    {
-        if (!isDead)
-            lockMovement = true;
-        else
-            lockMovement = false;
-        isDead = !isDead;
-    }
+    //private void Die()
+    //{
+    //    if (!isDead)
+    //        lockMovement = true;
+    //    else
+    //        lockMovement = false;
+    //    isDead = !isDead;
+    //}
 
     public void FinishSlashing()
     {

@@ -8,9 +8,9 @@ public class CharacterScript : MonoBehaviour
     protected Rigidbody2D myRigidbody;
     [SerializeField]
     protected Animator myAnimator;
+    protected SpriteRenderer mySpriteRenderer;
+    protected GameObject spawnPosition;
 
-    SpriteRenderer mySpriteRenderer;
-    GameObject spawnPosition;
 
     public int playerNumber;
     public int health;
@@ -22,6 +22,7 @@ public class CharacterScript : MonoBehaviour
     protected bool lockMovement;
     protected bool isJumping;
     protected bool isFalling;
+    protected bool isRunning;
 
 
     // Update is called once per frame
@@ -34,14 +35,16 @@ public class CharacterScript : MonoBehaviour
         isDead = false;
         lockMovement = false;
         isJumping = false;
+        spawnPosition = transform.GetChild(0).gameObject;
     }
 
     protected virtual void Update()
     {
-        SetPlayerMovementInput();
+        PlayerInput();
+        SetBasicAnimator();
     }
 
-    void SetPlayerMovementInput()
+    void PlayerInput()
     {
         if (!isDead)
         {
@@ -55,7 +58,28 @@ public class CharacterScript : MonoBehaviour
             {
                 myRigidbody.velocity = new Vector2(0, myRigidbody.velocity.y);
             }
+
+            //TEMPORAL
+            if (Input.GetKeyDown(KeyCode.K))
+                Die();
         }
+    }
+
+    void SetBasicAnimator()
+    {
+        isRunning = (Mathf.Round(Mathf.Abs(myRigidbody.velocity.x)) > 0 && Input.GetAxis("Player " + playerNumber + " Horizontal") != 0);
+
+        isFalling = (Mathf.Round(myRigidbody.velocity.y) < 0);
+
+        isJumping = isFalling ? false : isJumping;
+
+        myAnimator.SetBool("Running", isRunning);
+
+        myAnimator.SetBool("Falling", isFalling);
+
+        myAnimator.SetBool("Jumping", isJumping);
+
+        myAnimator.SetBool("Dead", isDead);
     }
 
     private void SetHorizontal()
@@ -89,7 +113,16 @@ public class CharacterScript : MonoBehaviour
 
     public void TakeDamage()
     {
+        myAnimator.SetTrigger("Damage Taken");
+        health--;
 
+        if (health <= 0)
+            Die();
+    }
+
+    public void Die()
+    {
+        isDead = true;
     }
 
     bool IsFacingLeft()
@@ -105,5 +138,14 @@ public class CharacterScript : MonoBehaviour
     public void UnlockMovement()
     {
         lockMovement = false;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isTouchingGround = true;
+            isJumping = false;
+        }
     }
 }
