@@ -23,6 +23,9 @@ public class CharacterScript : MonoBehaviour
     protected bool isJumping;
     protected bool isFalling;
     protected bool isRunning;
+    protected bool isAttacking;
+    protected bool isAttacking2;
+    protected bool isAttacking3;
     protected bool isSpecial;
 
 
@@ -61,6 +64,22 @@ public class CharacterScript : MonoBehaviour
                 myRigidbody.velocity = new Vector2(0, myRigidbody.velocity.y);
             }
 
+            if (Input.GetButtonDown("Player " + playerNumber + " Fire 1"))
+            {
+                if (!isAttacking && !isAttacking2 && !isAttacking3)
+                    isAttacking = true;
+
+                else if(isAttacking && !isAttacking2)
+                {
+                    isAttacking2 = true;
+                }
+
+                else if(isAttacking2)
+                {
+                    isAttacking3 = true;
+                }
+            }
+
             if (Input.GetButton("Player " + playerNumber + " Fire 2") && !isJumping && !isFalling)
             {
                 isSpecial = true;
@@ -92,6 +111,12 @@ public class CharacterScript : MonoBehaviour
 
         myAnimator.SetBool("Jumping", isJumping);
 
+        myAnimator.SetBool("Attack", isAttacking);
+
+        myAnimator.SetBool("Attack 2", isAttacking2);
+
+        myAnimator.SetBool("Attack 3", isAttacking3);
+
         myAnimator.SetBool("Special", isSpecial);
 
         myAnimator.SetBool("Dead", isDead);
@@ -99,12 +124,28 @@ public class CharacterScript : MonoBehaviour
 
     private void SetHorizontal()
     {
-        if (Input.GetAxis("Player " + playerNumber + " Horizontal") != 0)
-        {
-            mySpriteRenderer.flipX = IsFacingLeft();
-            myRigidbody.velocity = new Vector2(speed * Input.GetAxis("Player " + playerNumber + " Horizontal"), myRigidbody.velocity.y);
-            UpdateSpawnPosition();
-        }
+        //if (Input.GetAxis("Player " + playerNumber + " Horizontal") != 0)
+        //{
+        //    mySpriteRenderer.flipX = IsFacingLeft();
+        //    myRigidbody.velocity = new Vector2(speed * (Input.GetAxis("Player " + playerNumber + " Horizontal") / Mathf.Abs(Input.GetAxis("Player " + playerNumber + " Horizontal"))), myRigidbody.velocity.y);
+        //    UpdateSpawnPosition();
+        //}
+
+        //else
+        //{
+        //    myRigidbody.velocity = new Vector2(0, myRigidbody.velocity.y);
+        //}
+
+        mySpriteRenderer.flipX = Input.GetAxis("Player " + playerNumber + " Horizontal") != 0 ? IsFacingLeft() : mySpriteRenderer.flipX;
+        myRigidbody.velocity = new Vector2(speed * DirectionMultiplier(), myRigidbody.velocity.y);
+        UpdateSpawnPosition();
+
+
+    }
+
+    private int DirectionMultiplier()
+    {
+        return (int)(Input.GetAxis("Player " + playerNumber + " Horizontal") / Mathf.Abs(Input.GetAxis("Player " + playerNumber + " Horizontal")));
     }
 
     private void SetVertical()
@@ -156,8 +197,11 @@ public class CharacterScript : MonoBehaviour
         lockMovement = false;
     }
 
-    public void FinishSpecial()
+    public void FinishAttacks()
     {
+        isAttacking = false;
+        isAttacking2 = false;
+        isAttacking3 = false;
         isSpecial = false;
     }
 

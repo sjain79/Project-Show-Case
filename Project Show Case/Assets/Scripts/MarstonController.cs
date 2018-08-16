@@ -10,9 +10,6 @@ public class MarstonController : CharacterScript
 
     GameObject muzzleFlash;
 
-    bool isShooting;
-    bool isAttacking;
-
     [SerializeField]
     bool testingBool;
 
@@ -24,7 +21,6 @@ public class MarstonController : CharacterScript
     protected override void Update()
     {
         base.Update();
-        SetAnimator();
         if (!testingBool)
             return;
         PlayerInput();
@@ -63,21 +59,6 @@ public class MarstonController : CharacterScript
         //{
         //    isAttacking2 = true;
         //}
-        if (Input.GetButtonDown("Player " + playerNumber + " Fire 1"))
-        {
-            isAttacking = true;
-        }
-
-    }
-
-    private void SetAnimator()
-    {
-
-        //myAnimator.SetBool("Attack 3", isAttacking3);
-
-        //myAnimator.SetBool("Attack 2", isAttacking2);
-
-        myAnimator.SetBool("Attack", isAttacking);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
