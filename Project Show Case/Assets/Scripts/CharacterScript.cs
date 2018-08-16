@@ -23,6 +23,7 @@ public class CharacterScript : MonoBehaviour
     protected bool isJumping;
     protected bool isFalling;
     protected bool isRunning;
+    protected bool isSpecial;
 
 
     // Update is called once per frame
@@ -35,6 +36,7 @@ public class CharacterScript : MonoBehaviour
         isDead = false;
         lockMovement = false;
         isJumping = false;
+        isSpecial = false;
         spawnPosition = transform.GetChild(0).gameObject;
     }
 
@@ -59,6 +61,17 @@ public class CharacterScript : MonoBehaviour
                 myRigidbody.velocity = new Vector2(0, myRigidbody.velocity.y);
             }
 
+            if (Input.GetButton("Player " + playerNumber + " Fire 1") && !isJumping && !isFalling)
+            {
+                isSpecial = true;
+            }
+
+            //TEMPORAL
+            if (Input.GetKeyDown(KeyCode.H))
+            {
+                TakeDamage();
+            }
+
             //TEMPORAL
             if (Input.GetKeyDown(KeyCode.K))
                 Die();
@@ -78,6 +91,8 @@ public class CharacterScript : MonoBehaviour
         myAnimator.SetBool("Falling", isFalling);
 
         myAnimator.SetBool("Jumping", isJumping);
+
+        myAnimator.SetBool("Special", isSpecial);
 
         myAnimator.SetBool("Dead", isDead);
     }
@@ -113,11 +128,12 @@ public class CharacterScript : MonoBehaviour
 
     public void TakeDamage()
     {
-        myAnimator.SetTrigger("Damage Taken");
         health--;
-
         if (health <= 0)
             Die();
+        else
+            myAnimator.SetTrigger("Damage Taken");
+
     }
 
     public void Die()
@@ -138,6 +154,11 @@ public class CharacterScript : MonoBehaviour
     public void UnlockMovement()
     {
         lockMovement = false;
+    }
+
+    public void FinishSpecial()
+    {
+        isSpecial = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
