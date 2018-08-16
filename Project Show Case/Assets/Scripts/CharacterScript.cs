@@ -61,7 +61,7 @@ public class CharacterScript : MonoBehaviour
                 myRigidbody.velocity = new Vector2(0, myRigidbody.velocity.y);
             }
 
-            if (Input.GetButton("Player " + playerNumber + " Fire 1") && !isJumping && !isFalling)
+            if (Input.GetButton("Player " + playerNumber + " Fire 2") && !isJumping && !isFalling)
             {
                 isSpecial = true;
             }
