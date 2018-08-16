@@ -203,6 +203,7 @@ public class CharacterScript : MonoBehaviour
         isAttacking2 = false;
         isAttacking3 = false;
         isSpecial = false;
+        UnlockMovement();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
