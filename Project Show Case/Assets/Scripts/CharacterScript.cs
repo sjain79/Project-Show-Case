@@ -124,21 +124,21 @@ public class CharacterScript : MonoBehaviour
 
     private void SetHorizontal()
     {
-        //if (Input.GetAxis("Player " + playerNumber + " Horizontal") != 0)
-        //{
-        //    mySpriteRenderer.flipX = IsFacingLeft();
-        //    myRigidbody.velocity = new Vector2(speed * (Input.GetAxis("Player " + playerNumber + " Horizontal") / Mathf.Abs(Input.GetAxis("Player " + playerNumber + " Horizontal"))), myRigidbody.velocity.y);
+        if (Input.GetAxis("Player " + playerNumber + " Horizontal") != 0)
+        {
+            mySpriteRenderer.flipX = IsFacingLeft();
+            myRigidbody.velocity = new Vector2(speed * DirectionMultiplier(), myRigidbody.velocity.y);
+            UpdateSpawnPosition();
+        }
+
+        else
+        {
+            myRigidbody.velocity = new Vector2(0, myRigidbody.velocity.y);
+        }
+
+        //    mySpriteRenderer.flipX = Input.GetAxis("Player " + playerNumber + " Horizontal") != 0 ? IsFacingLeft() : mySpriteRenderer.flipX;
+        //    myRigidbody.velocity = new Vector2(speed * DirectionMultiplier(), myRigidbody.velocity.y);
         //    UpdateSpawnPosition();
-        //}
-
-        //else
-        //{
-        //    myRigidbody.velocity = new Vector2(0, myRigidbody.velocity.y);
-        //}
-
-        mySpriteRenderer.flipX = Input.GetAxis("Player " + playerNumber + " Horizontal") != 0 ? IsFacingLeft() : mySpriteRenderer.flipX;
-        myRigidbody.velocity = new Vector2(speed * DirectionMultiplier(), myRigidbody.velocity.y);
-        UpdateSpawnPosition();
 
 
     }
