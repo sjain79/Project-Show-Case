@@ -47,18 +47,6 @@ public class MarstonController : CharacterScript
         //    isShooting = false;
         //}
 
-        Debug.Log(Input.GetAxis("Player " + playerNumber + " Fire 1"));
-        //TODO: Fix issue
-        //https://www.youtube.com/watch?v=56VtmxfiKfs
-        if (Input.GetAxis("Player " + playerNumber + " Fire 1") < 0)
-        {
-            isShooting = true;
-        }
-        else
-        {
-            isShooting = false;
-        }
-
 
         //if (Input.GetAxis("Player " + playerNumber + " Vertical") > 0 && isTouchingGround)
         //{
@@ -75,7 +63,7 @@ public class MarstonController : CharacterScript
         //{
         //    isAttacking2 = true;
         //}
-        if (Input.GetButtonDown("Player " + playerNumber + " Fire 2"))
+        if (Input.GetButtonDown("Player " + playerNumber + " Fire 1"))
         {
             isAttacking = true;
         }
@@ -84,7 +72,6 @@ public class MarstonController : CharacterScript
 
     private void SetAnimator()
     {
-        myAnimator.SetBool("Shooting", isShooting);
 
         //myAnimator.SetBool("Attack 3", isAttacking3);
 
