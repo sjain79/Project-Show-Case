@@ -16,6 +16,9 @@ public class CharacterScript : MonoBehaviour
     public int health;
     public int speed;
     public int jumpingSpeed;
+    public float attackRange;
+    public Transform attackPos;
+    public LayerMask playerLayer;
 
     protected bool isTouchingGround;
     protected bool isDead;
@@ -27,6 +30,7 @@ public class CharacterScript : MonoBehaviour
     protected bool isAttacking2;
     protected bool isAttacking3;
     protected bool isSpecial;
+    protected Vector2 attackPosVector;
 
 
     // Update is called once per frame
@@ -41,6 +45,7 @@ public class CharacterScript : MonoBehaviour
         isJumping = false;
         isSpecial = false;
         spawnPosition = transform.GetChild(0).gameObject;
+        attackPosVector = new Vector2(0.6f, 0f);
     }
 
     protected virtual void Update()
@@ -67,16 +72,22 @@ public class CharacterScript : MonoBehaviour
             if (Input.GetButtonDown("Player " + playerNumber + " Fire 1"))
             {
                 if (!isAttacking && !isAttacking2 && !isAttacking3)
-                    isAttacking = true;
-
-                else if(isAttacking && !isAttacking2)
                 {
-                    isAttacking2 = true;
+                    isAttacking = true;
+                    Attack();
+
                 }
 
-                else if(isAttacking2)
+                else if (isAttacking && !isAttacking2)
+                {
+                    isAttacking2 = true;
+                    Attack();
+                }
+
+                else if (isAttacking2)
                 {
                     isAttacking3 = true;
+                    Attack();
                 }
             }
 
@@ -127,6 +138,7 @@ public class CharacterScript : MonoBehaviour
         if (Input.GetAxis("Player " + playerNumber + " Horizontal") != 0)
         {
             mySpriteRenderer.flipX = IsFacingLeft();
+            attackPos.localPosition = AttackPositionVector();
             myRigidbody.velocity = new Vector2(speed * DirectionMultiplier(), myRigidbody.velocity.y);
             UpdateSpawnPosition();
         }
@@ -187,6 +199,11 @@ public class CharacterScript : MonoBehaviour
         return Input.GetAxis("Player " + playerNumber + " Horizontal") < 0;
     }
 
+    Vector2 AttackPositionVector()
+    {
+        return IsFacingLeft() ? -attackPosVector : attackPosVector;
+    }
+
     public void LockMovement()
     {
         lockMovement = true;
@@ -195,6 +212,25 @@ public class CharacterScript : MonoBehaviour
     public void UnlockMovement()
     {
         lockMovement = false;
+    }
+
+    public void Attack()
+    {
+        Collider2D[] playersDamaged = Physics2D.OverlapCircleAll(attackPos.position, attackRange, playerLayer);
+        for (int i = 0; i < playersDamaged.Length; i++)
+        {
+            CharacterScript temp = playersDamaged[i].GetComponent<CharacterScript>();
+            if(temp != null)
+            {
+                temp.TakeDamage();
+            }
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackPos.position, attackRange);
     }
 
     public void FinishAttacks()

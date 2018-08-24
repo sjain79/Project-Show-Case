@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114175196424077976}
   m_Layer: 0
   m_Name: MUSASHI
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -151,7 +151,7 @@ MonoBehaviour:
   myAnimator: {fileID: 0}
   playerNumber: 1
   health: 100
-  speed: 20
+  speed: 15
   jumpingSpeed: 18
 --- !u!212 &212015927275942354
 SpriteRenderer:
