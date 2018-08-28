@@ -11,6 +11,21 @@ Prefab:
   m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1381428746952016}
   m_IsPrefabAsset: 1
+--- !u!1 &1213199456819724
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4843894866838238}
+  m_Layer: 0
+  m_Name: Attack Position
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1381428746952016
 GameObject:
   m_ObjectHideFlags: 0
@@ -24,7 +39,7 @@ GameObject:
   - component: {fileID: 61706550068359526}
   - component: {fileID: 95885832104648182}
   - component: {fileID: 114175196424077976}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MUSASHI
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -70,8 +85,22 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 4151247999596530}
+  - {fileID: 4843894866838238}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4843894866838238
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1213199456819724}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.6, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4221074117880184}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &50108585413676522
 Rigidbody2D:
@@ -153,6 +182,11 @@ MonoBehaviour:
   health: 100
   speed: 15
   jumpingSpeed: 18
+  attackRange: 0.5
+  attackPos: {fileID: 4843894866838238}
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!212 &212015927275942354
 SpriteRenderer:
   m_ObjectHideFlags: 1
